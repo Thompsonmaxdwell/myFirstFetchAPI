@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax one </title>
+</head>
+<style>
+body{
+    background-color: orange;
+}
+h1{
+    text-align: center;
+}
+
+ul{
+    background-color: #cacaca;
+    display: flex;
+    list-style-type: none;
+    border-radius: 10px;
+    padding:20px
+}
+
+    
+img{
+   border-radius: 50%;
+}
+
+</style>
+<body>
+   <h1>First Ajax Fetching Test API</h1>
+   <button id="btn">Fetch</button>
+   <div class="output"></div>
+
+   <script>
+     document.querySelector('#btn').addEventListener('click',fetch);
+
+     function fetch(){
+        const xhl = new XMLHttpRequest();
+        xhl.open('GET', 'https:/api.github.com/users', true)
+        
+        xhl.onload = function(){
+            if(this.status == 200){
+                var user = '';
+            var users = JSON.parse(this.responseText);
+               for( let i  in users){
+                   console.log(users[i])
+                   user += `<ul>
+                      <li>'<img src=${users[i].avatar_url} width="150" height=150"'</li>
+                     <li>
+                        <h5> ${users[i].organizations_url}</h5>
+                       <h2> ${users[i].type}</h2>
+                    </li>
+                    </ul>
+                   `;
+  
+               }
+               document.querySelector('.output').innerHTML = user;
+
+            }
+        }
+        xhl.send()
+     }
+   </script>
+</body>
+</html>
